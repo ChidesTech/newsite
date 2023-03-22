@@ -38,12 +38,11 @@ export default function Homepage() {
    
    
 
+
     useEffect(() => {
         getProducts();
+    }, []);
     
-
-
-    }, [])
     return <>
         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
             <div className="carousel-inner">

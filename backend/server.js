@@ -5,6 +5,7 @@ const User = require("./models/userModel");
 const userRouter = require("./routes/userRoutes");
 const productRouter = require("./routes/productRoutes");
 const orderRouter = require("./routes/orderRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
 
 
 
@@ -25,6 +26,7 @@ app.get("/" , (request, response) =>{
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/reviews", reviewRouter);
 
 
 
