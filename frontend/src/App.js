@@ -36,6 +36,7 @@ function App() {
     < Route path="/order/:id" element={<OrderDetailsPage/>}/>
     < Route path="/order-history" element={<OrderHistoryPage/>}/>
     < Route path="/search/:text" element={<SearchResultPage/>}/>
+    < Route path="/statu/:text" element={<SearchResultPage/>}/>
    
 
     

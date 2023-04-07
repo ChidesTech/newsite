@@ -114,8 +114,9 @@ export default function Homepage() {
         </center>
         <div className="container">
             <div className="row d-flex justify-content-center">
-
-                {products.length > 0 && products.map(product => {
+           
+                {products.length > 0 && products.map((product, i) => {
+                   if(i >= 3) {return};
                     return <div className="col" key={product._id}>
                         <div className="card" style={{ width: "18rem" }}>
                          <Link to={`/product/${product._id}`}>

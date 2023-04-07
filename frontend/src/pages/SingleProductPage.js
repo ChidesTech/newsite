@@ -12,7 +12,7 @@ export default function SingleProductPage() {
    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
    const [text, setText] = useState("");
    const [reviews, setReviews] = useState([]);
-   const [rating , setRating] = useState(0)
+   const [rating, setRating] = useState(0)
 
    async function getProduct() {
       const { data } = await http.get(`/products/${id}`);
@@ -42,6 +42,18 @@ export default function SingleProductPage() {
    async function getReviews() {
       const { data } = await http.get(`/reviews/${id}`);
       setReviews(data)
+   }
+
+   async function deleteHandler(id){
+      const {data} = await http.delete(`/reviews/${id}`);
+      if(data.error){
+         Swal.fire("Error", data.error, "error");
+         return;
+      }
+      if(data.success){
+         Swal.fire("Done", "Review Successfully Deleted", "success");
+         getReviews();
+      }
    }
 
    useEffect(() => {
@@ -79,9 +91,12 @@ export default function SingleProductPage() {
                      <h2 style={{ textShadow: "1px 1px 1px white" }} className="text-white my-4">Reviews</h2>
                      {reviews.map(review => {
                         return <div className="mb-3 rounded border border-light p-3">
-                           <h5 className="text-white">{review.user.username}</h5>
-                           <p className="text-white">{review.text}</p>
+                           <h5 className="text-white "> {review.user.username} <small><i className="fa fa-envelope ms-5"></i> {review.user.email}</small> </h5>
+                           <p style={{whiteSpace : "pre"}} className="text-white">{review.text}</p>
                            <p className="text-white">{review.createdAt.substr(0, 10)}</p>
+                           {userInfo._id == review.user._id ?
+                              <p onClick={() => deleteHandler(review._id)} style={{ textAlign: "end", cursor: "pointer" }} className=""><i className="fa fa-trash-alt text-danger fs-4"></i></p> : null
+                           }
                         </div>
 
                      })}

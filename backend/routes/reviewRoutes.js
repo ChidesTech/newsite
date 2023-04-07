@@ -28,7 +28,22 @@ reviewRouter.get("/:productId", async (req, res) => {
   res.send(reviews);
   
 
-})
+});
+
+reviewRouter.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+    if(!isValidObjectId(id)){
+        res.send({error : "The ID of the review is invalid"});
+        return;
+       }
+    const deletedReview = await Review.findByIdAndDelete(id);
+    if(deletedReview){
+        res.send({success : "Review Deleted"})
+    }else{
+        res.send({error : "Error deleting review"})
+    }
+}
+)
 
 
 

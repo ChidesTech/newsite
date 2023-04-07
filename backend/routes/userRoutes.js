@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
 
 const userRouter = express.Router();
 
@@ -15,7 +16,7 @@ userRouter.post("/register", async (req, res) => {
     const newUser = new User({
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        password: bcrypt.hashSync(req.body.password, 10)
     })
     //Save the user
     const user = await newUser.save();
@@ -37,7 +38,7 @@ userRouter.post("/login", async (req, res) => {
     }
 
     //check if the password supplied matches with the existing user's password
-    if (req.body.password !== existingUser.password) {
+    if (!bcrypt.compareSync(req.body.password, existingUser.password)) {
         res.send({ error: "The password is incorrect" });
         return;
     }
